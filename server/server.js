@@ -26,6 +26,9 @@ const taskRepository = require('./repositories/taskRepository');
 // Pass io instance to routes
 app.use('/api/tasks', createTaskRoutes(io));
 
+const authRoutes = require('./routes/auth');
+app.use('/auth', authRoutes);
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true

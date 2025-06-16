@@ -1,9 +1,13 @@
 const express = require('express');
 const taskRepository = require('../repositories/taskRepository');
+const authMiddleware = require('../middleware/authMiddleware');
 
 // Export a function that accepts io instance
 module.exports = (io) => {
   const router = express.Router();
+
+  // Apply auth middleware to all routes
+  router.use(authMiddleware);
 
   // GET all tasks
   router.get('/', async (req, res) => {
@@ -40,6 +44,8 @@ module.exports = (io) => {
     }
   });
 
+  // lcoking mechanism to prevent multiple clients from editing the same task at the same time
+  // start edit
   router.patch('/:id/start-edit', async (req, res) => {
     try {
       const task = await taskRepository.findById(req.params.id);
@@ -59,7 +65,7 @@ module.exports = (io) => {
       res.status(500).json({ message: 'Failed to lock task' });
     }
   });
-
+  // end edit
   router.patch('/:id/end-edit', async (req, res) => {
     try {
       const task = await taskRepository.findById(req.params.id);

@@ -1,0 +1,29 @@
+<div class="login-container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px;">
+  <mat-card class="login-card" style="max-width: 450px; width: 100%; background: white; border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
+    <mat-card-header style="background: white; padding: 32px 32px 16px;">
+      <mat-card-title style="color: #333; font-size: 28px; font-weight: 600; text-align: center; margin: 0;">Login</mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content style="padding: 24px 32px; background: white;">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" style="display: flex; flex-direction: column; gap: 20px;">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+
+        <div *ngIf="error" class="error" style="color: #e74c3c; margin: 16px 0; font-size: 14px; text-align: center; padding: 12px; background: #fdf2f2; border: 1px solid #fecaca; border-radius: 6px;">{{ error }}</div>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width" style="height: 48px; font-size: 16px; font-weight: 600; margin-top: 8px; border-radius: 8px;">Login</button>
+      </form>
+    </mat-card-content>
+    
+    <mat-card-actions style="text-align: center; padding: 16px 32px 32px; background: white;">
+      <p style="margin: 0; color: #666; font-size: 14px;">Don't have an account? <a routerLink="/register" style="color: #3f51b5; text-decoration: none; font-weight: 600;">Register here</a></p>
+    </mat-card-actions>
+  </mat-card>
+</div>
