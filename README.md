@@ -15,6 +15,8 @@
 
 ---
 
+<img width="833" alt="image" src="https://github.com/user-attachments/assets/60efa00d-d533-4592-8c49-2e0a9bc2f933" />
+
 ## 🛠 Technologies Used
 
 ### Frontend
