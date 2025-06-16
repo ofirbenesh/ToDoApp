@@ -1,0 +1,35 @@
+::ng-deep .mat-mdc-dialog-container {
+  --mdc-dialog-container-max-width: 500px;
+  --mdc-dialog-container-min-width: 400px;
+}
+
+.full-width {
+  width: 100%;
+  min-width: 300px;
+}
+
+mat-dialog-content {
+  padding: 50px 24px 20px;
+  min-height: 140px;
+}
+
+mat-dialog-actions {
+  padding: 8px 24px 20px;
+  gap: 12px;
+}
+
+h2[mat-dialog-title] {
+  margin: 0 0 10px 0;
+  padding: 20px 24px 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+mat-form-field {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+button {
+  min-width: 80px;
+}

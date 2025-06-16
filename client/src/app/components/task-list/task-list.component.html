@@ -1,0 +1,61 @@
+<mat-card class="task-list-card">
+  <h2>To-Do List</h2>
+
+  <div class="add-button">
+    <button mat-raised-button color="primary" (click)="openAddDialog()">
+      <mat-icon>add</mat-icon>
+      Add Task
+    </button>
+  </div>  
+
+  <table mat-table [dataSource]="tasks" class="mat-elevation-z2">
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Task </th>
+      <td mat-cell *matCellDef="let task"> {{ task.title }} </td>
+    </ng-container>
+
+    <!-- Completed Column -->
+    <ng-container matColumnDef="completed">
+      <th mat-header-cell *matHeaderCellDef> Completed </th>
+      <td mat-cell *matCellDef="let task">
+        <mat-checkbox
+        [checked]="task.completed"
+        (change)="toggleCompleted(task)"
+        color="accent"
+      >
+      </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let task">
+        <button
+        mat-icon-button
+        color="primary"
+        (click)="editTask(task)"
+        [disabled]="task.editingBy && task.editingBy !== userId"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+             
+      <button
+      mat-icon-button
+      color="warn"
+      (click)="deleteTask(task)"
+      [disabled]="task.editingBy"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+           
+      </td>
+    </ng-container>
+
+    <!-- Table Header and Rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>
