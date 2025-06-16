@@ -69,16 +69,28 @@ $ npm install
 
 # Create a .env file with the following:
 MONGO_URI=mongodb://localhost:27017/tasks
-JWT_SECRET=yourSecretKey
 
 # Start backend server
 $ npm run dev
-# Runs at http://localhost:3000
+# Runs at http://localhost:5000
 
 # ---- Frontend Setup ----
 $ cd ../client
 $ npm install
 
 # Start frontend server
-$ npm start
+$ ng serve
 # Runs at http://localhost:4200
+```
+
+## How to Use
+
+- Open (http://localhost:4200) in multiple tabs to simulate multiple clients.
+- In order to login, you will need to register. submit a user name and password. then login with those.
+ <img width="536" alt="image" src="https://github.com/user-attachments/assets/1a38b3d1-1924-4f94-a1c6-4fc5dd69f449" />
+
+- Create tasks using the dialog popup.
+- Edit, delete, or complete tasks — changes will reflect in real time across all clients.
+- When a task is being edited in one tab, other clients will be locked out from editing or deleting that task.
+
+---
