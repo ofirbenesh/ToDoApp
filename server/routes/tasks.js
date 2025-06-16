@@ -19,7 +19,6 @@ module.exports = (io) => {
   router.post('/', async (req, res) => {
     try {
       const newTask = await taskRepository.createTask(req.body);
-      console.log('🚀 Emitting task_created event:', newTask);
       io.emit('task_created', newTask);
       res.status(201).json(newTask);
     } catch (error) {
@@ -35,7 +34,6 @@ module.exports = (io) => {
       if (!updated) {
         return res.status(404).json({ message: 'Task not found' });
       }
-      console.log('🔄 Emitting task_updated event:', updated);
       io.emit('task_updated', updated);
       res.json(updated);
     } catch (error) {
@@ -57,7 +55,6 @@ module.exports = (io) => {
     
       task.editingBy = req.body.userId;
       await task.save();
-      console.log('🔒 Emitting task_locked event:', task);
       io.emit('task_locked', task);
       res.json(task);
     } catch (error) {
@@ -73,7 +70,6 @@ module.exports = (io) => {
     
       task.editingBy = null;
       await task.save();
-      console.log('🔓 Emitting task_unlocked event:', task);
       io.emit('task_unlocked', task);
       res.json(task);
     } catch (error) {
@@ -89,7 +85,6 @@ module.exports = (io) => {
       if (!deleted) {
         return res.status(404).json({ message: 'Task not found' });
       }
-      console.log('🗑️ Emitting task_deleted event for ID:', req.params.id);
       io.emit('task_deleted', req.params.id);
       res.sendStatus(204);
     } catch (error) {

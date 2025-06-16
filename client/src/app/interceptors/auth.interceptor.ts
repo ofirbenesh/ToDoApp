@@ -6,7 +6,6 @@ import { catchError, throwError } from 'rxjs';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   
-  // Only access localStorage in browser environment (not during SSR)
   if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
     const token = localStorage.getItem('token');
     if (token) {

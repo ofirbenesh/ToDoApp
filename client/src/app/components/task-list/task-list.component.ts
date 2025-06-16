@@ -54,30 +54,38 @@ export class TaskListComponent implements OnInit {
   } 
 
 
-  // editTask(task: Task): void {
-  //   const dialogRef = this.dialog.open(EditTaskDialogComponent, {
-  //     data: task
-  //   });
-  
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result && result !== task.title) {
-  //       this.taskService.updateTask(task._id, { title: result }).subscribe();
-  //     }
-  //   });
-  // }
   editTask(task: Task): void {
-    this.taskService.startEdit(task._id, this.userId).subscribe(() => {
-      const dialogRef = this.dialog.open(EditTaskDialogComponent, {
-        data: task
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        this.taskService.endEdit(task._id).subscribe();
-  
-        if (result && result !== task.title) {
-          this.taskService.updateTask(task._id, { title: result }).subscribe();
+    // First, start the edit (lock the task)
+    this.taskService.startEdit(task._id, this.userId).subscribe({
+      next: () => {
+        // Open the edit dialog
+        const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+          data: task
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          // Always end the edit (unlock the task) when dialog closes
+          this.taskService.endEdit(task._id).subscribe();
+    
+          // If there's a result and it's different from the original title, update the task
+          if (result && result !== task.title) {
+            this.taskService.updateTask(task._id, { title: result }).subscribe({
+              next: (updatedTask) => {
+              },
+              error: (error) => {
+                console.error('Error updating task:', error);
+              }
+            });
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error starting edit:', error);
+        // Handle the case where the task is already being edited
+        if (error.status === 409) {
+          alert('This task is currently being edited by another user. Please try again later.');
         }
-      });
+      }
     });
   }
   

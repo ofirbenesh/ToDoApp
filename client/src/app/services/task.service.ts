@@ -35,7 +35,8 @@ export class TaskService {
       });
 
       this.socket.on('task_updated', (updated: Task) => {
-        const updatedList = this.tasksSubject.value.map(t =>
+        const currentTasks = this.tasksSubject.value;
+        const updatedList = currentTasks.map(t =>
           t._id === updated._id ? updated : t
         );
         this.tasksSubject.next(updatedList);
@@ -69,7 +70,6 @@ export class TaskService {
   addTask(title: string): Observable<Task> {
     return this.http.post<Task>(this.apiUrl, { title }).pipe(
       tap(task => {
-        // Socket events handle UI updates
       })
     );
   }
@@ -77,7 +77,6 @@ export class TaskService {
   updateTask(id: string, data: Partial<Task>): Observable<Task> {
     return this.http.put<Task>(`${this.apiUrl}/${id}`, data).pipe(
       tap(updated => {
-        // Socket events handle UI updates
       })
     );
   }  
@@ -85,7 +84,6 @@ export class TaskService {
   deleteTask(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
       tap(() => {
-        // Socket events handle UI updates
       })
     );
   }
